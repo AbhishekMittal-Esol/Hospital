@@ -1,0 +1,27 @@
+# Secrets & local config
+.env
+.env.local
+
+# Python
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Database (regenerated via init_db.py)
+database/hospital.db
+database/*.db-journal
+
+# Assignment spec (local only)
+question.txt
+
+# IDE / OS
+.cursor/
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store

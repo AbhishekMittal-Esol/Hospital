@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="chat-container">
+        <header class="chat-header">
+            <div class="chat-title">
+                <h1>Hospital Assistant</h1>
+                <span class="subtitle">Powered by Multi-Agent AI</span>
+            </div>
+            <button id="resetBtn" title="Start a new conversation">New chat</button>
+        </header>
+
+        <div class="chat-messages" id="chatMessages"></div>
+
+        <form class="chat-input" id="chatForm">
+            <textarea id="messageInput" rows="1" placeholder="Type your message..." autocomplete="off"></textarea>
+            <button type="submit" id="sendBtn">Send</button>
+        </form>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

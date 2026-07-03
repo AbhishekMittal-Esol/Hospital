@@ -1,0 +1,253 @@
+:root {
+    --primary: #1e6f5c;
+    --primary-dark: #16564699;
+    --bg: #eef2f5;
+    --user-bubble: #1e6f5c;
+    --bot-bubble: #ffffff;
+    --text: #1f2d3d;
+    --muted: #6b7c8f;
+    --border: #dce3ea;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 720px;
+    height: 90vh;
+    background: #f7f9fb;
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header {
+    background: var(--primary);
+    color: #fff;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.chat-header h1 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.chat-header .subtitle {
+    font-size: 0.8rem;
+    opacity: 0.85;
+}
+
+#resetBtn {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+#resetBtn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+}
+
+.msg {
+    max-width: 78%;
+    padding: 0.7rem 1rem;
+    border-radius: 14px;
+    line-height: 1.45;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 0.95rem;
+    animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.msg.user {
+    align-self: flex-end;
+    background: var(--user-bubble);
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.msg.bot {
+    align-self: flex-start;
+    background: var(--bot-bubble);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+}
+
+.typing {
+    align-self: flex-start;
+    display: flex;
+    gap: 4px;
+    padding: 0.8rem 1rem;
+    background: var(--bot-bubble);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+}
+
+.typing span {
+    width: 8px;
+    height: 8px;
+    background: var(--muted);
+    border-radius: 50%;
+    animation: blink 1.2s infinite both;
+}
+
+.typing span:nth-child(2) { animation-delay: 0.2s; }
+.typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes blink {
+    0%, 80%, 100% { opacity: 0.2; }
+    40% { opacity: 1; }
+}
+
+.chat-input {
+    display: flex;
+    gap: 0.6rem;
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    background: #fff;
+}
+
+.chat-input textarea {
+    flex: 1;
+    resize: none;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.95rem;
+    max-height: 120px;
+    outline: none;
+}
+
+.chat-input textarea:focus {
+    border-color: var(--primary);
+}
+
+.chat-input button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 0 1.4rem;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.chat-input button:disabled {
+    background: #9bb5ad;
+    cursor: not-allowed;
+}
+
+/* ---- Agent trace pills ---- */
+.agent-trace {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    align-self: flex-start;
+    max-width: 78%;
+    margin-bottom: -0.4rem; /* pulls it close to the message below */
+}
+
+.agent-pill {
+    background: #e8f4ef;
+    color: var(--primary);
+    border: 1px solid #c3dfd6;
+    border-radius: 99px;
+    padding: 0.18rem 0.6rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: default;
+    white-space: nowrap;
+}
+
+/* ---- Result card ---- */
+.result-card {
+    align-self: flex-start;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--primary);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    max-width: 78%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    animation: fadeIn 0.25s ease;
+}
+
+.result-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.88rem;
+}
+
+.result-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 5px;
+}
+
+.dot-ok   { background: #27ae60; }
+.dot-fail { background: #e74c3c; }
+.dot-info { background: #f39c12; }
+
+.result-label {
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+}
+
+.result-value {
+    color: #374151;
+    line-height: 1.4;
+}
+
+.result-summary {
+    font-size: 0.82rem;
+    color: var(--muted);
+    border-top: 1px dashed var(--border);
+    padding-top: 0.4rem;
+    margin-top: 0.1rem;
+    font-style: italic;
+}
