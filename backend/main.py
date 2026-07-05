@@ -11,6 +11,9 @@ load_dotenv()
 
 from backend.graph import app as graph_app
 from backend.chat import chat as run_chat, GREETING
+import sqlite3
+
+DB_PATH = os.path.join(os.path.dirname(os.path.dirname(__file__)), "database", "hospital.db")
 
 app = FastAPI(title="Agentic Hospital Management API")
 
@@ -96,6 +99,21 @@ async def handle_request(req: RequestModel):
         notification_status=final_state.get("notification_status", "Unknown"),
         summary=final_state.get("summary", "Workflow completed but no summary provided.")
     )
+
+@app.get("/api/database")
+async def get_database_data():
+    conn = sqlite3.connect(DB_PATH)
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    data = {}
+    tables = ["patients", "doctors", "doctor_slots", "appointments", "lab_reports"]
+    for table in tables:
+        cursor.execute(f"SELECT * FROM {table}")
+        data[table] = [dict(row) for row in cursor.fetchall()]
+        
+    conn.close()
+    return data
 
 # Mount frontend
 frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")

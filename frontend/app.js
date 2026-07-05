@@ -192,4 +192,75 @@ resetBtn.addEventListener("click", () => {
     loadGreeting();
 });
 
+const dbContent = document.getElementById("dbContent");
+const refreshDbBtn = document.getElementById("refreshDbBtn");
+
+async function loadDatabaseData() {
+    try {
+        dbContent.innerHTML = "<p>Loading data...</p>";
+        const res = await fetch("/api/database");
+        if (!res.ok) throw new Error("Failed to load database data");
+        const data = await res.json();
+        
+        dbContent.innerHTML = "";
+        
+        for (const [tableName, rows] of Object.entries(data)) {
+            const wrapper = document.createElement("div");
+            wrapper.className = "db-table-wrapper";
+            
+            const title = document.createElement("h3");
+            title.textContent = tableName.replace("_", " ");
+            wrapper.appendChild(title);
+            
+            if (rows.length === 0) {
+                const empty = document.createElement("p");
+                empty.textContent = "No data found.";
+                wrapper.appendChild(empty);
+            } else {
+                const table = document.createElement("table");
+                table.className = "db-table";
+                
+                const thead = document.createElement("thead");
+                const trHead = document.createElement("tr");
+                const keys = Object.keys(rows[0]);
+                keys.forEach(key => {
+                    const th = document.createElement("th");
+                    th.textContent = key;
+                    trHead.appendChild(th);
+                });
+                thead.appendChild(trHead);
+                table.appendChild(thead);
+                
+                const tbody = document.createElement("tbody");
+                rows.forEach(row => {
+                    const tr = document.createElement("tr");
+                    keys.forEach(key => {
+                        const td = document.createElement("td");
+                        td.textContent = row[key] !== null ? row[key] : "";
+                        tr.appendChild(td);
+                    });
+                    tbody.appendChild(tr);
+                });
+                table.appendChild(tbody);
+                
+                wrapper.appendChild(table);
+            }
+            
+            dbContent.appendChild(wrapper);
+        }
+    } catch (e) {
+        dbContent.innerHTML = `<p style="color: red;">Error: ${e.message}</p>`;
+    }
+}
+
+refreshDbBtn.addEventListener("click", loadDatabaseData);
+
+// Also refresh database on sending a message to see updates immediately
+const originalSendMessage = sendMessage;
+sendMessage = async (text) => {
+    await originalSendMessage(text);
+    loadDatabaseData();
+}
+
 loadGreeting();
+loadDatabaseData();

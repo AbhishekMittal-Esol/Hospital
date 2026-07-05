@@ -18,7 +18,7 @@ from langchain_core.messages import (
 from langchain_core.tools import tool
 
 from backend.graph import llm, app as care_graph
-from backend.tools import get_patient_details, register_patient
+from backend.tools import get_patient_details, register_patient, search_doctors
 
 MAX_TOOL_ITERS = 6
 
@@ -58,6 +58,7 @@ def run_care_workflow(patient_id: str, request: str) -> Dict[str, Any]:
     and notifying the patient. Only call this once you have a valid patient_id
     and a clear description of what the patient needs.
     """
+    patient_id = patient_id.upper()
     initial_state = {
         "patient_id": patient_id,
         "user_query": request,
@@ -91,7 +92,7 @@ def run_care_workflow(patient_id: str, request: str) -> Dict[str, Any]:
     return result
 
 
-RECEPTIONIST_TOOLS = [get_patient_details, register_patient, run_care_workflow]
+RECEPTIONIST_TOOLS = [get_patient_details, register_patient, search_doctors, run_care_workflow]
 _tools_by_name = {t.name: t for t in RECEPTIONIST_TOOLS}
 _bound_llm = llm.bind_tools(RECEPTIONIST_TOOLS)
 
@@ -103,10 +104,14 @@ SYSTEM_PROMPT = (
     "2. If they are new, or the given ID is not found, register them: politely ask "
     "for their full name and age (ask for whatever is missing), then call "
     "register_patient. Tell them their new Patient ID.\n"
-    "3. Once you have a valid patient_id AND a clear medical request (appointment, "
-    "lab test, etc.), call run_care_workflow immediately — do NOT wait for more turns. "
-    "Pass a detailed description that includes the type of doctor or test needed.\n"
-    "4. Report the results back conversationally: mention the doctor name, appointment "
+    "3. Once you have a valid patient_id, ask questions to understand their medical needs "
+    "like a real human. If they have a symptom, ask clarifying questions (e.g., about pain).\n"
+    "4. If they need an appointment, use the search_doctors tool to find available "
+    "doctors and their slots. Present these options to the patient and ask them "
+    "which doctor and time they prefer.\n"
+    "5. Once the patient has confirmed a specific doctor and slot (or if they just want a lab test), "
+    "call run_care_workflow. Pass a detailed description that includes the exact doctor name and slot chosen.\n"
+    "6. Report the results back conversationally: mention the doctor name, appointment "
     "time, lab test outcome, and notification status clearly.\n\n"
     "Rules: Ask only for information you still need, one short question at a time. "
     "Never invent patient IDs, appointments, or results — only use tool outputs. "

@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="chat-container">
+    <div class="app-container">
+        <div class="chat-container">
         <header class="chat-header">
             <div class="chat-title">
                 <h1>Hospital Assistant</h1>
@@ -22,6 +23,17 @@
             <textarea id="messageInput" rows="1" placeholder="Type your message..." autocomplete="off"></textarea>
             <button type="submit" id="sendBtn">Send</button>
         </form>
+    </div>
+
+    <div class="database-container">
+        <div class="db-header">
+            <h2>Database Data</h2>
+            <button id="refreshDbBtn" title="Refresh database data">Refresh</button>
+        </div>
+        <div class="db-content" id="dbContent">
+            <!-- Data will be loaded here -->
+        </div>
+    </div>
     </div>
 
     <script src="app.js"></script>

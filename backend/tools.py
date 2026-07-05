@@ -14,6 +14,7 @@ def get_connection():
 @tool
 def get_patient_details(patient_id: str) -> Dict[str, Any]:
     """Fetches patient details, existing appointments, and lab reports from the database given a patient_id."""
+    patient_id = patient_id.upper()
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -167,6 +168,7 @@ def search_doctors(specialization: str) -> List[Dict[str, Any]]:
 @tool
 def book_appointment(patient_id: str, doctor_id: str, slot: str) -> Dict[str, Any]:
     """Books an appointment for a patient with a specific doctor at a specific slot."""
+    patient_id = patient_id.upper()
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -212,6 +214,7 @@ def book_appointment(patient_id: str, doctor_id: str, slot: str) -> Dict[str, An
 @tool
 def check_lab_reports(patient_id: str, test_name: str) -> Dict[str, Any]:
     """Checks if a specific lab report exists for a patient. Use test_name like 'ECG' or 'Blood Test'."""
+    patient_id = patient_id.upper()
     conn = get_connection()
     cursor = conn.cursor()
     
@@ -229,6 +232,7 @@ def check_lab_reports(patient_id: str, test_name: str) -> Dict[str, Any]:
 @tool
 def schedule_lab_test(patient_id: str, test_name: str) -> Dict[str, Any]:
     """Schedules a new lab test for a patient."""
+    patient_id = patient_id.upper()
     conn = get_connection()
     cursor = conn.cursor()
     

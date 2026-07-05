@@ -23,18 +23,110 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
+}
+
+.app-container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1400px;
+    height: 90vh;
 }
 
 .chat-container {
-    width: 100%;
-    max-width: 720px;
-    height: 90vh;
+    flex: 1;
+    max-width: 600px;
+    height: 100%;
     background: #f7f9fb;
     border-radius: 14px;
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
     display: flex;
     flex-direction: column;
     overflow: hidden;
+}
+
+.database-container {
+    flex: 2;
+    height: 100%;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.db-header {
+    background: #2c3e50;
+    color: #fff;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.db-header h2 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+#refreshDbBtn {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+#refreshDbBtn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.db-content {
+    flex: 1;
+    padding: 1.5rem;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.db-table-wrapper {
+    margin-bottom: 1rem;
+}
+
+.db-table-wrapper h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+    text-transform: capitalize;
+    border-bottom: 2px solid var(--primary);
+    display: inline-block;
+    padding-bottom: 0.2rem;
+}
+
+.db-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.db-table th, .db-table td {
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--border);
+    text-align: left;
+}
+
+.db-table th {
+    background: #f1f5f9;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.db-table tr:nth-child(even) {
+    background: #f8fafc;
 }
 
 .chat-header {
