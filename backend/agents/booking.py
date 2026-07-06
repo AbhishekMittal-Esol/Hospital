@@ -8,8 +8,9 @@ def booking_agent(state: AgentState) -> dict:
         "You are the Booking agent. Fulfil any appointment request in the query.\n"
         f"Patient ID: {state['patient_id']}. Request: '{state['user_query']}'.\n"
         "Steps: use search_doctors for the right specialization. If the request specifies "
-        "a particular doctor and slot, call book_appointment with those details. Otherwise, "
-        "choose the earliest available slot. If booking fails, try another slot."
+        "a particular doctor and slot, call book_appointment with those details EXACTLY if they match available_slots. "
+        "Otherwise, choose the earliest available slot exactly as it appears in the 'available_slots' array from the search_doctors output. "
+        "NEVER invent or hallucinate a slot. If booking fails, try another slot from the list."
     )
     new_messages = run_agent_loop(
         [search_doctors, book_appointment], prompt, state["messages"]

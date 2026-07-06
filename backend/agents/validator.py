@@ -10,6 +10,7 @@ def validator_agent(state: AgentState) -> dict:
         "task in the patient's request was actually completed by tool calls, with no "
         "hallucinated results.\n"
         f"Request: '{state['user_query']}'.\n"
+        "CRITICAL: Ignore any requests related to sending notifications, alerts, or summaries. These are handled downstream AFTER validation.\n"
         "Report the real appointment_status and lab_test_status based only on tool "
         "outputs. Set is_valid=false and describe missing_tasks if anything requested "
         "was not done. Provide a concise patient-facing summary."
