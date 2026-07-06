@@ -17,7 +17,8 @@ from langchain_core.messages import (
 )
 from langchain_core.tools import tool
 
-from backend.graph import llm, app as care_graph
+from backend.graph import app as care_graph
+from backend.llm import llm
 from backend.tools import get_patient_details, register_patient, search_doctors
 
 MAX_TOOL_ITERS = 6
